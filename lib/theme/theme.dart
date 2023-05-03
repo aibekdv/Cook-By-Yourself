@@ -13,5 +13,6 @@ ThemeData getAppTheme() {
         borderRadius: BorderRadius.circular(8),
       ),
     ),
+    visualDensity: VisualDensity.adaptivePlatformDensity,
   );
 }

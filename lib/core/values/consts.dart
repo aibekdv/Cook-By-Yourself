@@ -8,4 +8,8 @@ class RouteConst {
   static const String signIn = 'signIn';
   static const String signUp = 'signUp';
   static const String resetPassword = 'resetPassword';
+  static const String favoritePage = 'favoritePage';
+  static const String cartPage = 'cartPage';
+  static const String profilePage = 'profilePage';
+  static const String settingsPage = 'settingsPage';
 }

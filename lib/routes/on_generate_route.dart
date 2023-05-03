@@ -6,7 +6,7 @@ import '../feature/presentation/pages/pages.dart';
 
 class OnGenerateRoute {
   static Route<dynamic>? route(RouteSettings settings) {
-    final args = settings.arguments;
+    final args = settings.arguments as ScreenRouteArgs;
 
     switch (settings.name) {
       case RouteConst.signIn:
@@ -26,6 +26,13 @@ class OnGenerateRoute {
       case RouteConst.resetPassword:
         return PageTransition(
           child: const ResetPasswordPage(),
+          type: PageTransitionType.fade,
+          duration: const Duration(milliseconds: 500),
+        );
+
+      case RouteConst.favoritePage:
+        return PageTransition(
+          child: FavoritePage(isRouting: args.isRouting),
           type: PageTransitionType.fade,
           duration: const Duration(milliseconds: 500),
         );
@@ -56,4 +63,10 @@ class ErrorPage extends StatelessWidget {
       ),
     );
   }
+}
+
+class ScreenRouteArgs {
+  final bool isRouting;
+
+  ScreenRouteArgs({required this.isRouting});
 }

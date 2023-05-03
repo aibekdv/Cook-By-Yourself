@@ -1,4 +1,5 @@
 import 'package:cook_by_yourself/feature/presentation/pages/credential/credential.dart';
+import 'package:cook_by_yourself/feature/presentation/pages/pages.dart';
 import 'package:cook_by_yourself/routes/on_generate_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -33,7 +34,7 @@ class _MyAppState extends State<MyApp> {
       initialRoute: '/',
       onGenerateRoute: OnGenerateRoute.route,
       routes: {
-        "/": (context) => const CredentialPage(),
+        "/": (context) => const MainScreen(),
       },
     );
   }
