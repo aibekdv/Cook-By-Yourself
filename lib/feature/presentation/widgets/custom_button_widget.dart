@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class CustomButtonWidget extends StatelessWidget {
   final Color color;
-  final String title;
+  final Widget title;
   final VoidCallback? onTap;
   final bool? isWelcome;
 
@@ -35,14 +35,7 @@ class CustomButtonWidget extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8),
               ),
       ),
-      child: Text(
-        title,
-        style: const TextStyle(
-          color: Colors.black,
-          fontWeight: FontWeight.w600,
-          fontSize: 14,
-        ),
-      ),
+      child: title,
     );
   }
 }

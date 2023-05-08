@@ -8,3 +8,9 @@ abstract class CredentialState extends Equatable {
 }
 
 class CredentialInitial extends CredentialState {}
+
+class CredentialLoading extends CredentialState {}
+
+class CredentialLoaded extends CredentialState {}
+
+class CredentialFailure extends CredentialState {}

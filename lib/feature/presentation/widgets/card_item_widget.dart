@@ -1,8 +1,24 @@
 import 'package:cook_by_yourself/core/values/consts.dart';
 import 'package:flutter/material.dart';
 
-class CardItemWidget extends StatelessWidget {
-  const CardItemWidget({super.key});
+class CardItemWidget extends StatefulWidget {
+  final int? id;
+  final String? title;
+  final String? desc;
+
+  const CardItemWidget({
+    super.key,
+    this.title,
+    this.desc,
+    this.id,
+  });
+
+  @override
+  State<CardItemWidget> createState() => _CardItemWidgetState();
+}
+
+class _CardItemWidgetState extends State<CardItemWidget> {
+  bool isFavorite = false;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +32,7 @@ class CardItemWidget extends StatelessWidget {
           fit: BoxFit.cover,
         ),
         borderRadius: BorderRadius.all(Radius.circular(8)),
-        color: greenColor,
+        color: yellowColor,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
@@ -27,10 +43,16 @@ class CardItemWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.favorite_border,
-                  color: Colors.white,
+                onPressed: () {
+                  isFavorite = !isFavorite;
+                  setState(() {});
+                  isFavorite
+                      ? toast(msg: "Успешно добавлено")
+                      : toast(msg: "Успешно удалено", isError: true);
+                },
+                icon: Icon(
+                  isFavorite ? Icons.favorite_outlined : Icons.favorite_border,
+                  color: isFavorite ? Colors.red : Colors.white,
                 ),
                 splashRadius: 25,
               ),
@@ -38,6 +60,7 @@ class CardItemWidget extends StatelessWidget {
           ),
           Container(
             width: double.infinity,
+            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
             decoration: const BoxDecoration(
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(8),
@@ -45,12 +68,14 @@ class CardItemWidget extends StatelessWidget {
               ),
               color: greenColor,
             ),
-            child: const Text(
-              "Salat myaso",
-              style: TextStyle(
+            child: Text(
+              widget.title ?? "",
+              style: const TextStyle(
                 color: Colors.white,
-                fontSize: 16,
+                fontSize: 14,
               ),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.center,
             ),
           ),

@@ -5,3 +5,5 @@ export 'home/home.dart';
 export 'profile/profile.dart';
 export 'main_screen/main_screen.dart';
 export 'settings/settings.dart';
+export 'cooking/cooking.dart';
+export 'internet/internet.dart';

@@ -35,8 +35,13 @@ dependencies:
   flutter_bloc: ^8.1.2
   flutter_launcher_icons: ^0.13.1
   flutter_native_splash: ^2.2.19
+  fluttertoast: ^8.2.1
+  get_it: ^7.4.0
   google_fonts: ^4.0.4
+  http: ^0.13.6
+  internet_connection_checker: ^1.0.0+1
   page_transition: ^2.0.9
+  shared_preferences: ^2.1.0
 
 dev_dependencies:
   flutter_lints: ^2.0.0
@@ -53,8 +58,7 @@ flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
   image_path: "assets/images/logo.png"
-  min_sdk_android: 21 
-
+  min_sdk_android: 21
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

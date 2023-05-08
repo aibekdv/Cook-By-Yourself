@@ -1,7 +1,10 @@
 import 'package:cook_by_yourself/core/values/consts.dart';
+import 'package:cook_by_yourself/feature/domain/entities/dish_entity.dart';
+import 'package:cook_by_yourself/feature/presentation/cubit/recipe/recipe_cubit.dart';
 import 'package:cook_by_yourself/feature/presentation/pages/favorite/widgets/favorite_item_widget.dart';
 import 'package:cook_by_yourself/feature/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FavoritePage extends StatefulWidget {
   final bool isRouting;
@@ -12,6 +15,14 @@ class FavoritePage extends StatefulWidget {
 }
 
 class _FavoritePageState extends State<FavoritePage> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      BlocProvider.of<RecipeCubit>(context).getFavorites();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,13 +41,34 @@ class _FavoritePageState extends State<FavoritePage> {
             ),
             const SizedBox(height: 15),
             Expanded(
-              child: ListView.separated(
-                itemCount: 8,
-                itemBuilder: (context, index) => const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20.0),
-                  child: FavoriteItemWidget(),
-                ),
-                separatorBuilder: (context, index) => const Divider(),
+              child: BlocBuilder<RecipeCubit, RecipeState>(
+                builder: (context, state) {
+                  List<DishEntity> favorites = [];
+                  if (state is FavoriteLoading) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (state is FavoriteLoaded) {
+                    favorites = state.dishes;
+                  } else if (state is FavoriteFailure) {
+                    return const Center(
+                      child: Text("Error"),
+                    );
+                  }
+                  return ListView.separated(
+                    itemCount: favorites.isEmpty ? 1 : favorites.length,
+                    itemBuilder: (context, index) => Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: favorites.isNotEmpty
+                          ? FavoriteItemWidget(
+                              id: favorites[index].id,
+                              title: favorites[index].name,
+                            )
+                          : const Center(
+                              child: Text("Пустое"),
+                            ),
+                    ),
+                    separatorBuilder: (context, index) => const Divider(),
+                  );
+                },
               ),
             )
           ],

@@ -37,6 +37,13 @@ class OnGenerateRoute {
           duration: const Duration(milliseconds: 500),
         );
 
+      case RouteConst.cookingPage:
+        return PageTransition(
+          child: CookinPage(isRouting: args.isRouting),
+          type: PageTransitionType.fade,
+          duration: const Duration(milliseconds: 500),
+        );
+
       default:
         return PageTransition(
           child: const ErrorPage(),

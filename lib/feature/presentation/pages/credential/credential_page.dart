@@ -27,7 +27,7 @@ class CredentialPage extends StatelessWidget {
                     topRight: Radius.circular(60),
                   ),
                 ),
-                child: Column(
+                child: ListView(
                   children: [
                     const Text(
                       "Добро пожаловать",
@@ -36,6 +36,7 @@ class CredentialPage extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                         color: Colors.white,
                       ),
+                      textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 60),
                     Row(
@@ -43,7 +44,14 @@ class CredentialPage extends StatelessWidget {
                         Expanded(
                           child: CustomButtonWidget(
                             color: yellowColor,
-                            title: "Войти",
+                            title: const Text(
+                              "Войти",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 14,
+                              ),
+                            ),
                             isWelcome: true,
                             onTap: () {
                               Navigator.pushNamed(
@@ -57,7 +65,14 @@ class CredentialPage extends StatelessWidget {
                         Expanded(
                           child: CustomButtonWidget(
                             color: Colors.white,
-                            title: "Регистрация",
+                            title: const Text(
+                              "Регистрация",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 14,
+                              ),
+                            ),
                             isWelcome: true,
                             onTap: () {
                               Navigator.pushNamed(

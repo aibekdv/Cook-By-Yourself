@@ -1,7 +1,9 @@
 import 'package:cook_by_yourself/core/utils/is_email.dart';
 import 'package:cook_by_yourself/core/values/consts.dart';
+import 'package:cook_by_yourself/feature/presentation/cubit/credential/credential_cubit.dart';
 import 'package:cook_by_yourself/feature/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ResetPasswordPage extends StatefulWidget {
   const ResetPasswordPage({super.key});
@@ -77,8 +79,15 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                         const SizedBox(height: 60),
                         CustomButtonWidget(
                           color: yellowColor,
-                          title: "Войти",
-                          onTap: _isActiveButton ? _signInUser : null,
+                          title: const Text(
+                            "Отправить",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 14,
+                            ),
+                          ),
+                          onTap: _isActiveButton ? _submitResetPassword : null,
                         ),
                       ],
                     ),
@@ -92,12 +101,15 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
     );
   }
 
-  _signInUser() {
+  _submitResetPassword() {
     var currentState = _formKey.currentState;
 
     if (currentState != null) {
       if (currentState.validate()) {
         debugPrint(_emailController.text);
+        BlocProvider.of<CredentialCubit>(context).resetPasswordUser(
+          email: _emailController.text,
+        );
       }
     }
   }

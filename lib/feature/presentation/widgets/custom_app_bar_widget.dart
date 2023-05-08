@@ -1,5 +1,8 @@
 import 'package:cook_by_yourself/core/values/consts.dart';
+import 'package:cook_by_yourself/feature/presentation/cubit/auth/auth_cubit.dart';
+import 'package:cook_by_yourself/feature/presentation/cubit/credential/credential_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CustomAppBarWidget extends StatelessWidget {
   final String? title;
@@ -65,12 +68,22 @@ class CustomAppBarWidget extends StatelessWidget {
                 ),
             ],
           ),
-          GestureDetector(
-            onTap: () {},
-            child: const Icon(
-              Icons.more_vert,
-              color: Colors.white,
-            ),
+          PopupMenuButton(
+            color: Colors.white,
+            itemBuilder: (context) {
+              return [
+                PopupMenuItem(
+                  onTap: () {
+                    BlocProvider.of<AuthCubit>(context).loggedOut();
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                      RouteConst.signIn,
+                      (route) => false,
+                    );
+                  },
+                  child: const Text("Выйти"),
+                )
+              ];
+            },
           )
         ],
       ),

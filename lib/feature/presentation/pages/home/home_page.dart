@@ -1,7 +1,12 @@
+import 'dart:math';
+
 import 'package:cook_by_yourself/core/values/consts.dart';
+import 'package:cook_by_yourself/feature/domain/entities/dish_entity.dart';
+import 'package:cook_by_yourself/feature/presentation/cubit/recipe/recipe_cubit.dart';
 import 'package:cook_by_yourself/feature/presentation/widgets/widgets.dart';
 import 'package:cook_by_yourself/routes/on_generate_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -12,6 +17,14 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      BlocProvider.of<RecipeCubit>(context).getAllDishes();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -122,40 +135,83 @@ class _HomePageState extends State<HomePage> {
               ),
               const SizedBox(height: 15),
               if (_currentIndex == 0)
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: GridView.builder(
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 12,
-                      mainAxisSpacing: 12,
-                    ),
-                    itemCount: 12,
-                    shrinkWrap: true,
-                    physics: const ScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      return const CardItemWidget();
-                    },
-                  ),
+                BlocBuilder<RecipeCubit, RecipeState>(
+                  builder: (context, state) {
+                    List<DishEntity> dishes = [];
+
+                    if (state is RecipeLoading) {
+                      return const CircularProgressIndicator();
+                    } else if (state is RecipeLoaded) {
+                      dishes = state.dishes;
+                    } else if (state is RecipeFailure) {
+                      return const Center(
+                        child: Text(
+                          "Error",
+                          style: TextStyle(fontSize: 20, color: Colors.white),
+                        ),
+                      );
+                    }
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: GridView.builder(
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 12,
+                          mainAxisSpacing: 12,
+                        ),
+                        itemCount: dishes.length,
+                        shrinkWrap: true,
+                        physics: const ScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          return CardItemWidget(
+                            title: dishes[index].name,
+                          );
+                        },
+                      ),
+                    );
+                  },
                 ),
               if (_currentIndex == 1)
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: GridView.builder(
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 12,
-                      mainAxisSpacing: 12,
-                    ),
-                    itemCount: 3,
-                    shrinkWrap: true,
-                    physics: const ScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      return const CardItemWidget();
-                    },
-                  ),
+                BlocBuilder<RecipeCubit, RecipeState>(
+                  builder: (context, state) {
+                    List<DishEntity> dishes = [];
+
+                    if (state is RecipeLoading) {
+                      return const CircularProgressIndicator();
+                    } else if (state is RecipeLoaded) {
+                      dishes = state.dishes;
+                    } else if (state is RecipeFailure) {
+                      return const Center(
+                        child: Text(
+                          "Error",
+                          style: TextStyle(fontSize: 20, color: Colors.white),
+                        ),
+                      );
+                    }
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: GridView.builder(
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 12,
+                          mainAxisSpacing: 12,
+                        ),
+                        itemCount: dishes.length > 1
+                            ? dishes.length - 1
+                            : dishes.length,
+                        shrinkWrap: true,
+                        physics: const ScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          return CardItemWidget(
+                            id: dishes[index].id,
+                            title: dishes[index].name,
+                          );
+                        },
+                      ),
+                    );
+                  },
                 ),
               const SizedBox(height: 10),
             ],

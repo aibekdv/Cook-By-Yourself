@@ -17,7 +17,7 @@ class BasketItemWidget extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
               image: const DecorationImage(
                 image: NetworkImage(
-                    "https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"),
+                    "https://i2.paste.pics/ae7582d530c998f3b60477fe36cd80ff.png"),
                 fit: BoxFit.cover,
               ),
             ),

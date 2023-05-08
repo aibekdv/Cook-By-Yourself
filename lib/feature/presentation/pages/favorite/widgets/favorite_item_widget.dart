@@ -1,8 +1,13 @@
 import 'package:cook_by_yourself/core/values/consts.dart';
+import 'package:cook_by_yourself/routes/on_generate_route.dart';
 import 'package:flutter/material.dart';
 
 class FavoriteItemWidget extends StatelessWidget {
-  const FavoriteItemWidget({super.key});
+  final String? title;
+  final String? description;
+  final int? id;
+
+  const FavoriteItemWidget({super.key, this.title, this.description, this.id});
 
   @override
   Widget build(BuildContext context) {
@@ -33,11 +38,11 @@ class FavoriteItemWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Flexible(
+                    Flexible(
                       flex: 1,
                       child: Text(
-                        "Салат Цезарь",
-                        style: TextStyle(
+                        title ?? "",
+                        style: const TextStyle(
                           color: greenColor,
                           fontSize: 18,
                         ),
@@ -62,11 +67,20 @@ class FavoriteItemWidget extends StatelessWidget {
                     )
                   ],
                 ),
-                const Text(
-                  "Подробнее",
-                  style: TextStyle(
-                    color: yellowColor,
-                    fontSize: 16,
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(
+                      context,
+                      RouteConst.cookingPage,
+                      arguments: ScreenRouteArgs(isRouting: true),
+                    );
+                  },
+                  child: const Text(
+                    "Подробнее",
+                    style: TextStyle(
+                      color: yellowColor,
+                      fontSize: 16,
+                    ),
                   ),
                 ),
               ],
